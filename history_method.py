@@ -1,4 +1,5 @@
-# Liste pour stocker l'historique
+#liste pour accéder à l'historique
+
 history = []
 
 def add_to_history(entry):
