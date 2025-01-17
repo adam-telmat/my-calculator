@@ -23,18 +23,18 @@ def clear_history():
 # Exemple d'utilisation
 while True:
     print("\nCalculatrice")
-    print("5. Afficher l'historique")
-    print("6. Effacer l'historique")
-    print("7. Quitter")
+    print("1. Afficher l'historique")
+    print("2. Effacer l'historique")
+    print("3. Quitter")
 
     choice = input("Choisissez une option : ")
 
 
-    if choice == "5":
+    if choice == "1":
         show_history()
-    elif choice == "6":
+    elif choice == "2":
         clear_history()
-    elif choice == "7":
+    elif choice == "3":
         print("Au revoir !")
         break
     else:
