@@ -84,9 +84,13 @@ def main():
                 break  # Sort de la boucle pour recommencer un calcul
             else:
                 print("Erreur : veuillez répondre par 'oui ou non'.") #message d'erreur si réponse autre que oui ou non
-                
+        break
             
 
 
 if __name__ == "__main__":
     main()
+
+#ajouter le temps sur l'historique
+#ajouter la possibilité de prendre le dernier résultat et d'effectuer un autre calcul
+#JSON
