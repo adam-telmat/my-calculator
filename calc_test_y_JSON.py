@@ -66,17 +66,27 @@ def main():
             view_hist = input("Voulez-vous voir l'historique de la calculatrice ? (oui/non) : ").strip().lower()
             if view_hist in ['oui', 'non']:
                 break  # Sortir de la boucle si la réponse est valide
-        print("Erreur : veuillez répondre par 'oui' ou 'non'.")  # Message d'erreur si réponse invalide
+            print("Erreur : veuillez répondre par 'oui' ou 'non'.")  # Message d'erreur si réponse invalide
 
         if view_hist == 'oui':
             show_history()
         
 
         # Demander si l'utilisateur veut continuer
-        again = input("Voulez-vous effectuer un autre calcul ? (oui/non) : ").strip().lower()
-        if again != 'oui':
-            print("Merci d'avoir utilisé la calculatrice. Au revoir !")
-            break
+        while True:
+            again = input("Voulez-vous effectuer un autre calcul ? (oui/non) : ").strip().lower()
+            if again in ['oui','non']:
+                if again != 'oui':
+                    print("Merci d'avoir utilisé la calculatrice. Au revoir !")
+                    break
+                else :
+                    print("Très bien, continuons !")
+                break  # Sort de la boucle pour recommencer un calcul
+            else:
+                print("Erreur : veuillez répondre par 'oui ou non'.") #message d'erreur si réponse autre que oui ou non
+                
+            
+
 
 if __name__ == "__main__":
     main()
