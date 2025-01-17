@@ -46,7 +46,8 @@ def show_history():
 
 def main():
     print("Bienvenue dans la calculatrice Python !")
-    while True:
+    keep_running=True
+    while keep_running:
         # Obtenir les entrées utilisateur
         num1 = get_number("Entrez le premier nombre : ")
         operator = get_operator()
@@ -78,13 +79,14 @@ def main():
             if again in ['oui','non']:
                 if again != 'oui':
                     print("Merci d'avoir utilisé la calculatrice. Au revoir !")
+                    keep_running=False
                     break
                 else :
                     print("Très bien, continuons !")
                 break  # Sort de la boucle pour recommencer un calcul
             else:
                 print("Erreur : veuillez répondre par 'oui ou non'.") #message d'erreur si réponse autre que oui ou non
-        break
+            
             
 
 
