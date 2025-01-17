@@ -62,7 +62,12 @@ def main():
         add_to_history(f"{num1} {operator} {num2} = {result}")
         
         # Proposer de voir l'historique
-        view_hist = input("Voulez-vous voir l'historique de la calculatrice ? (oui/non)").strip().lower()
+        while True:
+            view_hist = input("Voulez-vous voir l'historique de la calculatrice ? (oui/non) : ").strip().lower()
+            if view_hist in ['oui', 'non']:
+                break  # Sortir de la boucle si la réponse est valide
+        print("Erreur : veuillez répondre par 'oui' ou 'non'.")  # Message d'erreur si réponse invalide
+
         if view_hist == 'oui':
             show_history()
         
