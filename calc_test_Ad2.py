@@ -1,67 +1,67 @@
-import datetime
+from datetime import datetime
 import json
 
-# Nom du fichier JSON pour stocker l'historique
+# JSON file name to store history
 HISTORY_FILE = "history.json"
 
-# Charger l'historique au démarrage
+# Load history on startup
 def load_history():
-    """Charge l'historique depuis un fichier JSON, ou retourne une liste vide si le fichier n'existe pas."""
+    """Loads history from a JSON file, or returns an empty list if the file doesn't exist."""
     try:
         with open(HISTORY_FILE, 'r', encoding='utf-8') as file:
-            return json.load(file)  # Charger les données JSON
+            return json.load(file)  # Load JSON data
     except FileNotFoundError:
-        return []  # Si le fichier n'existe pas, retourner une liste vide
+        return []  # If the file doesn't exist, return an empty list
     except json.JSONDecodeError:
-        print("Erreur : le fichier d'historique est corrompu. L'historique sera réinitialisé.")
-        return []  # Si le fichier est corrompu, retourner une liste vide
+        print("Error: The history file is corrupted. The history will be reset.")
+        return []  # If the file is corrupted, return an empty list
 
-# Sauvegarder l'historique dans un fichier JSON
+# Save history to a JSON file
 def save_history():
-    """Sauvegarde l'historique dans un fichier JSON."""
+    """Saves the history to a JSON file."""
     with open(HISTORY_FILE, 'w', encoding='utf-8') as file:
-        json.dump(history, file, indent=4, ensure_ascii=False)  # Sauvegarder avec indentation pour lisibilité
+        json.dump(history, file, indent=4, ensure_ascii=False)  # Save with indentation for readability
 
-# Ajouter une entrée à l'historique
+# Add an entry to the history
 def add_to_history(entry):
-    """Ajoute une opération à l'historique avec la date et l'heure."""
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Date et heure actuelles
-    history.append(f"{timestamp} - {entry}")  # Ajouter l'entrée formatée à la liste d'historique
-    save_history()  # Sauvegarder automatiquement après chaque modification
+    """Adds an operation to the history with date and time."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Current date and time
+    history.append(f"{timestamp} - {entry}")  # Add the formatted entry to the history list
+    save_history()  # Automatically save after each modification
 
-# Afficher l'historique
+# Display the history
 def show_history():
-    """Affiche l'historique des opérations."""
+    """Displays the history of operations."""
     if not history:
-        print("Aucun calcul effectué pour l'instant.")
+        print("No calculations have been performed yet.")
     else:
-        print("Historique des calculs :")
+        print("Calculation history:")
         for entry in history:
             print(entry)
 
-# Demander un nombre valide
+# Prompt for a valid number
 def get_number(prompt):
-    """Demande à l'utilisateur un nombre valide."""
+    """Prompts the user for a valid number."""
     while True:
         try:
-            return float(input(prompt))  # Convertir en nombre flottant
+            return float(input(prompt))  # Convert to a floating-point number
         except ValueError:
-            print("Entrée invalide. Veuillez entrer un nombre valide.")
+            print("Invalid input. Please enter a valid number.")
 
-# Demander un opérateur valide
+# Prompt for a valid operator
 def get_operator():
-    """Demande à l'utilisateur un opérateur valide."""
+    """Prompts the user for a valid operator."""
     valid_operators = ['+', '-', '*', '/']
     while True:
-        operator = input("Entrez un opérateur (+, -, *, /) : ").strip()
+        operator = input("Enter an operator (+, -, *, /): ").strip()
         if operator in valid_operators:
             return operator
         else:
-            print("Opérateur invalide. Veuillez choisir parmi +, -, *, /.")
+            print("Invalid operator. Please choose from +, -, *, /.")
 
-# Effectuer un calcul
+# Perform a calculation
 def calculate(a, b, operator):
-    """Effectue l'opération spécifiée sur deux nombres."""
+    """Performs the specified operation on two numbers."""
     if operator == '+':
         return a + b
     elif operator == '-':
@@ -70,52 +70,53 @@ def calculate(a, b, operator):
         return a * b
     elif operator == '/':
         if b == 0:
-            return "Erreur : division par zéro."
+            return "Error: Division by zero."
         return a / b
 
-# Demander une réponse 'oui' ou 'non'
+# Prompt for a 'yes' or 'no' response
 def get_yes_no_input(prompt):
-    """Demande une réponse 'oui' ou 'non' et la valide."""
+    """Prompts for a 'yes' or 'no' response and validates it."""
     while True:
         response = input(prompt).strip().lower()
-        if response in ['oui', 'non']:
-            return response  # Retourner la réponse valide
-        print("Erreur : veuillez répondre par 'oui' ou 'non'.")
+        if response in ['yes', 'no']:
+            return response  # Return the valid response
+        print("Error: Please respond with 'yes' or 'no'.")
 
-# Programme principal
+# Main program
 def main():
-    global history  # Déclarer l'historique comme global pour qu'il soit modifié partout
-    history = load_history()  # Charger l'historique depuis le fichier JSON
-    print("Bienvenue dans la calculatrice Python !")
+    global history  # Declare history as global so it can be modified everywhere
+    history = load_history()  # Load history from the JSON file
+    print("Welcome to the Python calculator!")
 
     keep_running = True
     while keep_running:
-        # Obtenir les entrées utilisateur avec validation
-        num1 = get_number("Entrez le premier nombre : ")
+        # Get user input with validation
+        num1 = get_number("Enter the first number: ")
         operator = get_operator()
-        num2 = get_number("Entrez le deuxième nombre : ")
+        num2 = get_number("Enter the second number: ")
 
-        # Calculer le résultat
+        # Compute the result
         result = calculate(num1, num2, operator)
 
-        # Afficher le résultat
-        print(f"Résultat : {num1} {operator} {num2} = {result}")
+        # Display the result
+        print(f"Result: {num1} {operator} {num2} = {result}")
 
-        # Ajouter à l'historique avec la date et l'heure
+        # Add to history with date and time
         add_to_history(f"{num1} {operator} {num2} = {result}")
         
-        # Proposer de voir l'historique
-        view_hist = get_yes_no_input("Voulez-vous voir l'historique de la calculatrice ? (oui/non) : ")
-        if view_hist == 'oui':
+        # Offer to view the history
+        view_hist = get_yes_no_input("Would you like to view the calculator history? (yes/no): ")
+        if view_hist == 'yes':
             show_history()
 
-        # Demander si l'utilisateur veut continuer
-        again = get_yes_no_input("Voulez-vous effectuer un autre calcul ? (oui/non) : ")
-        if again == 'non':
-            print("Merci d'avoir utilisé la calculatrice. Au revoir !")
+        # Ask if the user wants to continue
+        again = get_yes_no_input("Would you like to perform another calculation? (yes/no): ")
+        if again == 'no':
+            print("Thank you for using the calculator. Goodbye!")
             keep_running = False
         else:
-            print("Très bien, continuons !")
+            print("Alright, let's continue!")
 
 if __name__ == "__main__":
     main()
+
