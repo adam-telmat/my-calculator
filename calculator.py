@@ -88,10 +88,22 @@ def main():
     history = load_history()  # Load history from the JSON file
     print("Welcome to the Python calculator!")
 
+    current_result = None  # Variable to store the previous result
     keep_running = True
+
     while keep_running:
-        # Get user input with validation
-        num1 = get_number("Enter the first number: ")
+        # Ask if the user wants to use the previous result
+        if current_result is not None:
+            use_previous = get_yes_no_input("Would you like to use the previous result? (yes/no): ")
+            if use_previous == 'yes':
+                num1 = current_result
+                print(f"Using previous result: {current_result}")
+            else:
+                num1 = get_number("Enter the first number: ")
+        else:
+            num1 = get_number("Enter the first number: ")
+
+        # Get the rest of the input
         operator = get_operator()
         num2 = get_number("Enter the second number: ")
 
@@ -103,7 +115,13 @@ def main():
 
         # Add to history with date and time
         add_to_history(f"{num1} {operator} {num2} = {result}")
-        
+
+        # Store the result for the next operation if it's a valid number
+        if isinstance(result, (int, float)):
+            current_result = result
+        else:
+            current_result = None
+
         # Offer to view the history
         view_hist = get_yes_no_input("Would you like to view the calculator history? (yes/no): ")
         if view_hist == 'yes':
@@ -119,5 +137,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
